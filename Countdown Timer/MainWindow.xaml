@@ -6,20 +6,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Countdown_Timer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        FontSize="18" FontFamily="Segoe UI Light" Background="#f4f4f4">
     
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="5" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Hello"/>
+        <!--Row 1-->
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" >
+            <TextBlock Style="{StaticResource TbHeader}" Text="Contadores" HorizontalAlignment="Center"/>
         </StackPanel>
+        <!--Row 2-->
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button Style="{StaticResource BtnMain}" Content="Nova Contagem"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
+            <ListBox Style="{StaticResource LbCountdown}">
+
+            </ListBox>
+        </StackPanel>
+        <!--Row 3-->
     </Grid>
 </Window>
