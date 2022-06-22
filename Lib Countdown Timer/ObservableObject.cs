@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Lib_Countdown_Timer
 {
-    internal class ObservableObject : INotifyPropertyChanged
+    public class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string? propertyname = null)
+        public void OnPropertyChanged([CallerMemberName] string? propertyname = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }

@@ -32,7 +32,8 @@
         </StackPanel>
         <!--Row 2-->
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <Button Style="{StaticResource BtnMain}" Content="Nova Contagem"/>
+            <Button Style="{StaticResource BtnMain}" Content="Nova Contagem"
+                    x:Name="BtnNewCount" Click="BtnNewCount_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
