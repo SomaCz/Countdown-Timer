@@ -7,36 +7,48 @@ namespace Countdown_Timer
 {
     public partial class NewCountDownWindow : Window
     {
+        private static readonly Regex _regexNumberOnly = new Regex("[^0-9]+$");
         public UserCountdown Countdown { get; set; } = new UserCountdown();
-        private static readonly Regex _regexNumberOnly = new Regex("[^0-9]");
         public NewCountDownWindow()
         {
             InitializeComponent();
         }
-        // Methods
-        private static bool IsTextNumber(string text)
+        public bool IsTextOnlyNumbers(string text)
         {
-            return _regexNumberOnly.IsMatch(text);
+            return !_regexNumberOnly.IsMatch(text);
         }
-        // Events
         private void TBPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = IsTextNumber(e.Text);
+            e.Handled = !IsTextOnlyNumbers(e.Text);
         }
-
         private void TbPasting(object sender, DataObjectPastingEventArgs e)
         {
-            // implement condition to only let int to be pasting
             e.CancelCommand();
         }
-
         private void AddCountdown_Click(object sender, RoutedEventArgs e)
         {
-            //Test
-            Countdown.SetDate();
-            MessageBox.Show(Countdown.FullDateCountdown.ToString());
-            MessageBox.Show(Countdown.FullDateCountdown.Kind.ToString());
-            //Test
+            if (Countdown.HasErrors)
+            {
+                MessageBox.Show("Campos invalidos");
+            }
+            else
+            {
+                if (Countdown.SetDateTime() == false)
+                {
+                    MessageBox.Show($"Data Invalida. Verifique se o mês possui {Countdown.CountdownDay} dias");
+                }
+                else
+                {
+                    if (Countdown.FullDateCountdown <= System.DateTime.Now == true)
+                    {
+                        MessageBox.Show("Data Invalida. Verifique se a data não esta no passado");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Enviado com sucesso");
+                    }
+                }
+            }
         }
     }
 }

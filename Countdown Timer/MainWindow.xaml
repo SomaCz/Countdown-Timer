@@ -28,7 +28,8 @@
         </Grid.RowDefinitions>
         <!--Row 1-->
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" >
-            <TextBlock Style="{StaticResource TbHeader}" Text="Contadores" HorizontalAlignment="Center"/>
+            <TextBlock Style="{StaticResource TbHeader}" Text="Contadores"
+                       HorizontalAlignment="Center"/>
         </StackPanel>
         <!--Row 2-->
         <StackPanel Grid.Row="2" Grid.Column="1">

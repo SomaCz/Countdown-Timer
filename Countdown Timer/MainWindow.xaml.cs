@@ -28,7 +28,6 @@ namespace Countdown_Timer
 
         private void BtnNewCount_Click(object sender, RoutedEventArgs e)
         {
-            //Add a check  
             NewCountDownWindow NewCountDown = new NewCountDownWindow();
             NewCountDown.ShowDialog();
         }

@@ -6,8 +6,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Countdown_Timer"
         mc:Ignorable="d"
-        Title="NewCountDownWindow" Height="450" Width="600"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        Title="NewCountDownWindow" Height="600" Width="600"
         FontSize="18" FontFamily="Segoe UI Light" Background="#f4f4f4">
+    
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
@@ -26,70 +29,94 @@
         </Grid.RowDefinitions>
         
         <!--Row 1-->
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+        <StackPanel  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
             <TextBlock Style="{StaticResource TbHeader}" HorizontalAlignment="Center"
                        Text="Adicionar Novo Contador"/>
         </StackPanel>
-        
         <!--Row 2-->
         <!--Form-->
+        <!--(Temp)Implement hint for all fields-->
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical"
-                    Grid.ColumnSpan="3"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Margin="0,25">
+                    Grid.ColumnSpan="3" HorizontalAlignment="Center"
+                    Margin="5,25">
             <!--Name-->
             <StackPanel Style="{StaticResource SpValidationForm}" 
                         Orientation="Horizontal">
                 <Label Style="{StaticResource LabelValidation}"
                        Content="Nome do evento"/>
-                <TextBox Style="{StaticResource TbValidation}"
-                         Text="{Binding UserCountdown.CountdownName}"/>
+                <TextBox Style="{StaticResource TbDateTimeValidation}"
+                         MaxLength="40"
+                         Text="{Binding Countdown.CountdownName,
+                    UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!--Date-->
             <StackPanel Style="{StaticResource SpValidationForm}" 
                         Orientation="Horizontal">
-                <Label Style="{StaticResource LabelValidation}"
-                       Content="Data do evento"/>
                 <!--Day-->
-                <Label Style="{StaticResource LabelDateTimeValidation}"
+                <Label Style="{StaticResource LabelValidation}"
                        Content="Dia"/>
-                <TextBox x:Name="TbDay"
-                         PreviewTextInput="TBPreviewTextInput"
+                <TextBox PreviewTextInput="TBPreviewTextInput"
                          MaxLength="2"
-                         DataObject.Pasting="TbPasting"
+                         DataObject.Pasting="TbPasting" 
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Countdown.CountdownDay}"/>
-                <!--Month-->
-                <Label Style="{StaticResource LabelDateTimeValidation}"
+                         Text="{Binding Path=Countdown.CountdownDay,
+                    UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel >
+            <!--Month-->
+            <StackPanel Style="{StaticResource SpValidationForm}" 
+                        Orientation="Horizontal">
+                <Label Style="{StaticResource LabelValidation}"
                        Content="Mês"/>
                 <TextBox PreviewTextInput="TBPreviewTextInput"
                          MaxLength="2"
                          DataObject.Pasting="TbPasting"
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Countdown.CountdownMonth}"/>
-                <!--Year-->
-                <Label Style="{StaticResource LabelDateTimeValidation}"
+                         Text="{Binding Countdown.CountdownMonth, 
+                     UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <!--Year-->
+            <StackPanel Style="{StaticResource SpValidationForm}" 
+                        Orientation="Horizontal">
+                <Label Style="{StaticResource LabelValidation}"
                        Content="Ano"/>
                 <TextBox PreviewTextInput="TBPreviewTextInput"
                          MaxLength="4"
                          DataObject.Pasting="TbPasting"
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Countdown.CountdownYear}"/>
+                         Text="{Binding Countdown.CountdownYear, 
+                    UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <!--Hour-->
+            <!--Time-->
             <StackPanel Style="{StaticResource SpValidationForm}" 
-                        Orientation="Horizontal">
+                        Orientation="Vertical">
                 <Label Style="{StaticResource LabelValidation}"
-                       Content="Hora do evento (Opcional)"/>
-                <TextBox Style="{StaticResource TbValidation}"/>
+                       Content="Horário (Opcional)"/>
+                <StackPanel Style="{StaticResource SpValidationForm}" 
+                            Orientation="Horizontal">
+                    <!--Hour-->
+                    <Label Style="{StaticResource LabelDateTimeValidation}"
+                       Content="Horas (24 Hrs)"/>
+                    <TextBox PreviewTextInput="TBPreviewTextInput"
+                             MinWidth="175"
+                             MaxLength="2"
+                             DataObject.Pasting="TbPasting"
+                             Style="{StaticResource TbDateTimeValidation}"
+                             Text="{Binding Countdown.CountdownHour,
+                    UpdateSourceTrigger=PropertyChanged}"/>
+                    <!--Minute-->
+                    <Label Style="{StaticResource LabelDateTimeValidation}"
+                       Content="Minutos"/>
+                    <TextBox PreviewTextInput="TBPreviewTextInput"
+                             MinWidth="175"
+                             MaxLength="2"
+                             DataObject.Pasting="TbPasting"
+                             Style="{StaticResource TbDateTimeValidation}"
+                             Text="{Binding Countdown.CountdownMinute, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
             </StackPanel>
-
-            <TextBlock Text="temp"/>
-            <TextBlock Text="{Binding Countdown.FullDateCountdown, 
-                       UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
         </StackPanel>
-        
         <!--Row 3-->
+        <!--Add Button-->
         <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <Button Style="{StaticResource BtnMain}" Content="Adicionar"
                     x:Name="AddCountdown" Click="AddCountdown_Click"/>
