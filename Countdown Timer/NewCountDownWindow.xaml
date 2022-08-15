@@ -46,7 +46,7 @@
                        Content="Nome do evento"/>
                 <TextBox Style="{StaticResource TbDateTimeValidation}"
                          MaxLength="40"
-                         Text="{Binding Countdown.CountdownName,
+                         Text="{Binding UserCountdown.CountdownName,
                     UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!--Date-->
@@ -59,7 +59,7 @@
                          MaxLength="2"
                          DataObject.Pasting="TbPasting" 
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Path=Countdown.CountdownDay,
+                         Text="{Binding Path=UserCountdown.CountdownDay,
                     UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel >
             <!--Month-->
@@ -71,7 +71,7 @@
                          MaxLength="2"
                          DataObject.Pasting="TbPasting"
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Countdown.CountdownMonth, 
+                         Text="{Binding UserCountdown.CountdownMonth, 
                      UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!--Year-->
@@ -83,7 +83,7 @@
                          MaxLength="4"
                          DataObject.Pasting="TbPasting"
                          Style="{StaticResource TbDateTimeValidation}"
-                         Text="{Binding Countdown.CountdownYear, 
+                         Text="{Binding UserCountdown.CountdownYear, 
                     UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!--Time-->
@@ -101,7 +101,7 @@
                              MaxLength="2"
                              DataObject.Pasting="TbPasting"
                              Style="{StaticResource TbDateTimeValidation}"
-                             Text="{Binding Countdown.CountdownHour,
+                             Text="{Binding UserCountdown.CountdownHour,
                     UpdateSourceTrigger=PropertyChanged}"/>
                     <!--Minute-->
                     <Label Style="{StaticResource LabelDateTimeValidation}"
@@ -111,7 +111,7 @@
                              MaxLength="2"
                              DataObject.Pasting="TbPasting"
                              Style="{StaticResource TbDateTimeValidation}"
-                             Text="{Binding Countdown.CountdownMinute, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding UserCountdown.CountdownMinute, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

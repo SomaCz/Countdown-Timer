@@ -20,13 +20,17 @@
             <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="10" />
         </Style>
+        <!--   MainWindow   -->
         <!--ListBox-->
         <Style TargetType="ListBox" x:Key="LbCountdown">
             <Setter Property="Margin" Value="25,5,25,5" />
         </Style>
-        <!--StackPanel-->
-        <Style TargetType="StackPanel" x:Key="SpValidationForm">
-            <Setter Property="Margin" Value="5,15,15,5" />
+        <Style TargetType="TextBlock" x:Key="TbCurrentlyTime">
+            <Setter Property="Foreground" Value="#FF436F9A" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="Margin" Value="15,15,0,5" />
         </Style>
         <!--    Validation  -->
         <!--TextBox-->
@@ -73,6 +77,10 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="FontSize" Value="14" />
+        </Style>
+        <!--StackPanel-->
+        <Style TargetType="StackPanel" x:Key="SpValidationForm">
+            <Setter Property="Margin" Value="5,15,15,5" />
         </Style>
     </Application.Resources>
 </Application>

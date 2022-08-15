@@ -8,7 +8,8 @@ namespace Countdown_Timer
     public partial class NewCountDownWindow : Window
     {
         private static readonly Regex _regexNumberOnly = new Regex("[^0-9]+$");
-        public UserCountdown Countdown { get; set; } = new UserCountdown();
+        public UserCountdown UserCountdown { get; set; } = new UserCountdown();
+        public Countdown NewCountdown { get; private set; } = new Countdown();
         public NewCountDownWindow()
         {
             InitializeComponent();
@@ -16,6 +17,26 @@ namespace Countdown_Timer
         public bool IsTextOnlyNumbers(string text)
         {
             return !_regexNumberOnly.IsMatch(text);
+        }
+        public bool IsValidCountdown (UserCountdown userCountdown, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            if (userCountdown.HasErrors)
+            { 
+                errorMessage = "Campos invalidos";
+                return false; 
+            }
+            if (!userCountdown.SetDateTime()) 
+            {
+                errorMessage = $"Data Invalida. Verifique se o mês possui {userCountdown.CountdownDay} dias";
+                return false;
+            }
+            if (UserCountdown.FullDateCountdown <= System.DateTime.Now)
+            {
+                errorMessage = "Data Invalida. Verifique se a data não esta no passado";
+                return false;
+            }
+            return true;
         }
         private void TBPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -27,27 +48,16 @@ namespace Countdown_Timer
         }
         private void AddCountdown_Click(object sender, RoutedEventArgs e)
         {
-            if (Countdown.HasErrors)
+            if (!IsValidCountdown(UserCountdown, out string errorMessage))
             {
-                MessageBox.Show("Campos invalidos");
+                MessageBox.Show(errorMessage);
             }
             else
             {
-                if (Countdown.SetDateTime() == false)
-                {
-                    MessageBox.Show($"Data Invalida. Verifique se o mês possui {Countdown.CountdownDay} dias");
-                }
-                else
-                {
-                    if (Countdown.FullDateCountdown <= System.DateTime.Now == true)
-                    {
-                        MessageBox.Show("Data Invalida. Verifique se a data não esta no passado");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Enviado com sucesso");
-                    }
-                }
+                ((MainWindow)Application.Current.MainWindow).NewCountdown.CountdownDateTime = UserCountdown.FullDateCountdown;
+                ((MainWindow)Application.Current.MainWindow).NewCountdown.CountdownName = UserCountdown.CountdownName;
+                MessageBox.Show("Enviado com sucesso");
+                Close();
             }
         }
     }

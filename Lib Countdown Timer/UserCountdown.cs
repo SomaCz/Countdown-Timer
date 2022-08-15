@@ -11,7 +11,6 @@ namespace Lib_Countdown_Timer
     public class UserCountdown : ObservableObject, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _propertyErrors = new Dictionary<string, List<string>>();
-        //Name
         private string countdownName;
         public string CountdownName
         {
@@ -32,8 +31,7 @@ namespace Lib_Countdown_Timer
                 OnPropertyChanged(nameof(CountdownName));
             }
         }
-        // // Date
-        //Day
+        //Date
         private string countdownDay;
         public string CountdownDay
         {
@@ -49,7 +47,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (!DateTime.TryParseExact(countdownDay, "dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                    if (IsValidDateTime(value,"dd") == false)
                     {
                         AddError(nameof(CountdownDay), "Dia Invalido");
                     }
@@ -57,7 +55,6 @@ namespace Lib_Countdown_Timer
                 OnPropertyChanged();
             }
         }
-        //Month
         private string countdownMonth;
         public string CountdownMonth
         {
@@ -72,7 +69,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (!DateTime.TryParseExact(countdownMonth, "MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                    if (IsValidDateTime(value, "MM") == false)
                     {
                         AddError(nameof(CountdownMonth), "Mês Invalido");
                     }
@@ -80,7 +77,6 @@ namespace Lib_Countdown_Timer
                 OnPropertyChanged();
             }
         }
-        //Year
         private string countdownYear;
         public string CountdownYear
         {
@@ -95,7 +91,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (!DateTime.TryParseExact(countdownYear, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                    if (IsValidDateTime(value, "yyyy") == false)
                     {
                         AddError(nameof(CountdownYear), "Ano Invalido");
                     }
@@ -103,8 +99,7 @@ namespace Lib_Countdown_Timer
                 OnPropertyChanged();
             }
         }
-        // // Time
-        //Hour
+        //Time
         private string? countdownHour;
         public string? CountdownHour
         {
@@ -115,7 +110,7 @@ namespace Lib_Countdown_Timer
                 ClearErrors(nameof(CountdownHour));
                 if (!string.IsNullOrWhiteSpace(countdownHour))
                 {
-                    if (!DateTime.TryParseExact(countdownHour, "HH", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                    if (IsValidDateTime(value, "HH") == false)
                     {
                         AddError(nameof(CountdownHour), "Hora Invalida");
                     }
@@ -123,7 +118,6 @@ namespace Lib_Countdown_Timer
                 OnPropertyChanged();
             }
         }
-        //Minute
         private string? countdownMinute;
         public string? CountdownMinute
         {
@@ -134,7 +128,7 @@ namespace Lib_Countdown_Timer
                 ClearErrors(nameof(CountdownMinute));
                 if (!string.IsNullOrWhiteSpace(countdownMinute))
                 {
-                    if (!DateTime.TryParseExact(countdownMinute, "mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                    if (IsValidDateTime(value, "mm") == false)
                     {
                         AddError(nameof(CountdownMinute), "Minuto Invalido");
                     }
@@ -157,14 +151,8 @@ namespace Lib_Countdown_Timer
         }
         public bool SetDateTime()
         {
-            if (string.IsNullOrWhiteSpace(CountdownHour))
-            {
-                CountdownHour = "00";
-            }
-            if (string.IsNullOrWhiteSpace(CountdownMinute))
-            {
-                CountdownMinute = "00";
-            }
+            CountdownHour = OpcionalField(CountdownHour);
+            CountdownMinute = OpcionalField(CountdownMinute);
 
             string? fullDateTimeStr = $"{countdownDay}/{countdownMonth}/{countdownYear}/{countdownHour}/{countdownMinute}";
             if (DateTime.TryParseExact(fullDateTimeStr, "d/M/yyyy/H/m", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateParseOutput))
@@ -172,18 +160,15 @@ namespace Lib_Countdown_Timer
                 FullDateCountdown = dateParseOutput;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
+        private bool IsValidDateTime(string? field, string? format) => DateTime.TryParseExact(field, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
+        private string OpcionalField(string? field) => string.IsNullOrWhiteSpace(field) ? "00" : field;
         // INotifyDataErrorInfo
         public bool HasErrors => _propertyErrors.Any();
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return _propertyErrors.GetValueOrDefault(propertyName, null);
-        }
+        public IEnumerable? GetErrors(string propertyName) => _propertyErrors.GetValueOrDefault(propertyName);
+        
         public void AddError(string propertyName, string errorMessage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))

@@ -32,9 +32,39 @@
                        HorizontalAlignment="Center"/>
         </StackPanel>
         <!--Row 2-->
-        <StackPanel Grid.Row="2" Grid.Column="1">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
             <Button Style="{StaticResource BtnMain}" Content="Nova Contagem"
                     x:Name="BtnNewCount" Click="BtnNewCount_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical"
+                    HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            
+            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="Atualmente"/>
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="{Binding CurrentlyDate, StringFormat=g}"/>
+            </StackPanel>
+
+            <!--Temp-->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="{Binding NewCountdown.CountdownName}"/>
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="{Binding NewCountdown.CountdownDateTime, StringFormat=g}"/>
+            </StackPanel>
+            <!--Countdown-->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="Tempo Restante"/>
+                <TextBlock Style="{StaticResource TbCurrentlyTime}"
+                       Text="{Binding NewCountdown.CountdownSpan, 
+                    StringFormat=d\\:hh\\:mm\\:ss}">
+                </TextBlock>
+            </StackPanel>
+            <!--Temp-->
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
