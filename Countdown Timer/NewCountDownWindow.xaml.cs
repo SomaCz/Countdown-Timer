@@ -9,34 +9,13 @@ namespace Countdown_Timer
     {
         private static readonly Regex _regexNumberOnly = new Regex("[^0-9]+$");
         public UserCountdown UserCountdown { get; set; } = new UserCountdown();
-        public Countdown NewCountdown { get; private set; } = new Countdown();
         public NewCountDownWindow()
         {
             InitializeComponent();
         }
-        public bool IsTextOnlyNumbers(string text)
+        public static bool IsTextOnlyNumbers(string text)
         {
             return !_regexNumberOnly.IsMatch(text);
-        }
-        public bool IsValidCountdown (UserCountdown userCountdown, out string errorMessage)
-        {
-            errorMessage = string.Empty;
-            if (userCountdown.HasErrors)
-            { 
-                errorMessage = "Campos invalidos";
-                return false; 
-            }
-            if (!userCountdown.SetDateTime()) 
-            {
-                errorMessage = $"Data Invalida. Verifique se o mês possui {userCountdown.CountdownDay} dias";
-                return false;
-            }
-            if (UserCountdown.FullDateCountdown <= System.DateTime.Now)
-            {
-                errorMessage = "Data Invalida. Verifique se a data não esta no passado";
-                return false;
-            }
-            return true;
         }
         private void TBPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -48,15 +27,19 @@ namespace Countdown_Timer
         }
         private void AddCountdown_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsValidCountdown(UserCountdown, out string errorMessage))
+            if (!UserCountdown.CountdownValidation.IsValidCountdown(out string errorMessage))
             {
-                MessageBox.Show(errorMessage);
+                MessageBox.Show(errorMessage,"Contagem Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                ((MainWindow)Application.Current.MainWindow).NewCountdown.CountdownDateTime = UserCountdown.FullDateCountdown;
-                ((MainWindow)Application.Current.MainWindow).NewCountdown.CountdownName = UserCountdown.CountdownName;
-                MessageBox.Show("Enviado com sucesso");
+                Countdown NewCountdown = new Countdown
+                {
+                    CountdownName = UserCountdown.CountdownName,
+                    CountdownDateTime = UserCountdown.FullDateCountdown
+                };
+                ((MainWindow)Application.Current.MainWindow).CountdownCollection.Countdowns.Add(NewCountdown);
+                MessageBox.Show("Enviado com sucesso","Nova Contagem");
                 Close();
             }
         }

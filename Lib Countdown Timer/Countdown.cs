@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lib_Countdown_Timer
 {
     public class Countdown : ObservableObject
     {
-        //Implements: if needed to notify OnCountdownBegins add "Started" on CountdownStatus enum
         public enum CountdownStatus { Disable, Active, Finished }
         #pragma warning disable CS8618 
         public event EventHandler<CountdownStatusChangedEventArgs> StatusChanged;

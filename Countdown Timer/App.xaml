@@ -7,30 +7,36 @@
         <!--Header-->
         <Style TargetType="TextBlock" x:Key="TbHeader">
             <Setter Property="Margin" Value="0,10" />
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontSize" Value="26" />
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="Foreground" Value="#4d80b3" />
         </Style>
         <!--Button-->
         <Style TargetType="Button" x:Key="BtnMain">
             <Setter Property="MinHeight" Value="50" />
-            <Setter Property="MinWidth" Value="75" />
+            <Setter Property="MinWidth" Value="80" />
             <Setter Property="MaxHeight" Value="75" />
             <Setter Property="MaxWidth" Value="200" />
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="10" />
+            <Setter Property="Padding" Value="5,0" />
         </Style>
         <!--   MainWindow   -->
         <!--ListBox-->
         <Style TargetType="ListBox" x:Key="LbCountdown">
             <Setter Property="Margin" Value="25,5,25,5" />
-        </Style>
-        <Style TargetType="TextBlock" x:Key="TbCurrentlyTime">
-            <Setter Property="Foreground" Value="#FF436F9A" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="28" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="MaxHeight" Value="585" />
             <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="Margin" Value="15,15,0,5" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Foreground" Value="#4d80b3" />
+            <Setter Property="Background" Value="#f4f4f4" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <!--ListBoxValues-->
+        <Style TargetType="TextBlock" x:Key="LbTbCountown">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="#FF4773A0" />
         </Style>
         <!--    Validation  -->
         <!--TextBox-->

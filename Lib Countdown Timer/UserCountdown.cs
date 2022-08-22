@@ -11,6 +11,7 @@ namespace Lib_Countdown_Timer
     public class UserCountdown : ObservableObject, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _propertyErrors = new Dictionary<string, List<string>>();
+        public UserCountdownValidation CountdownValidation { get;}
         private string countdownName;
         public string CountdownName
         {
@@ -47,7 +48,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (IsValidDateTime(value,"dd") == false)
+                    if (CountdownValidation.IsValidDateTime(value,"dd") == false)
                     {
                         AddError(nameof(CountdownDay), "Dia Invalido");
                     }
@@ -69,7 +70,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (IsValidDateTime(value, "MM") == false)
+                    if (CountdownValidation.IsValidDateTime(value, "MM") == false)
                     {
                         AddError(nameof(CountdownMonth), "Mês Invalido");
                     }
@@ -91,7 +92,7 @@ namespace Lib_Countdown_Timer
                 }
                 else
                 {
-                    if (IsValidDateTime(value, "yyyy") == false)
+                    if (CountdownValidation.IsValidDateTime(value, "yyyy") == false)
                     {
                         AddError(nameof(CountdownYear), "Ano Invalido");
                     }
@@ -110,7 +111,7 @@ namespace Lib_Countdown_Timer
                 ClearErrors(nameof(CountdownHour));
                 if (!string.IsNullOrWhiteSpace(countdownHour))
                 {
-                    if (IsValidDateTime(value, "HH") == false)
+                    if (CountdownValidation.IsValidDateTime(value, "HH") == false)
                     {
                         AddError(nameof(CountdownHour), "Hora Invalida");
                     }
@@ -128,7 +129,7 @@ namespace Lib_Countdown_Timer
                 ClearErrors(nameof(CountdownMinute));
                 if (!string.IsNullOrWhiteSpace(countdownMinute))
                 {
-                    if (IsValidDateTime(value, "mm") == false)
+                    if (CountdownValidation.IsValidDateTime(value, "mm") == false)
                     {
                         AddError(nameof(CountdownMinute), "Minuto Invalido");
                     }
@@ -139,6 +140,7 @@ namespace Lib_Countdown_Timer
         public DateTime FullDateCountdown { get; private set; }
         public UserCountdown()
         {
+            CountdownValidation = new UserCountdownValidation(this);
             countdownName = string.Empty;
             countdownDay = string.Empty;
             countdownMonth = string.Empty;
@@ -149,20 +151,18 @@ namespace Lib_Countdown_Timer
             AddError(nameof(CountdownMonth), "");
             countdownYear = DateTime.Now.Year.ToString();
         }
-        public bool SetDateTime()
+        public bool TrySetDateTime()
         {
             CountdownHour = OpcionalField(CountdownHour);
             CountdownMinute = OpcionalField(CountdownMinute);
-
-            string? fullDateTimeStr = $"{countdownDay}/{countdownMonth}/{countdownYear}/{countdownHour}/{countdownMinute}";
-            if (DateTime.TryParseExact(fullDateTimeStr, "d/M/yyyy/H/m", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateParseOutput))
+            if (DateTime.TryParseExact(StringDateTime(), "d/M/yyyy/H/m", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateParseOutput))
             {
                 FullDateCountdown = dateParseOutput;
                 return true;
             }
             return false;
         }
-        private bool IsValidDateTime(string? field, string? format) => DateTime.TryParseExact(field, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
+        private string StringDateTime() => $"{countdownDay}/{countdownMonth}/{countdownYear}/{countdownHour}/{countdownMinute}";
         private string OpcionalField(string? field) => string.IsNullOrWhiteSpace(field) ? "00" : field;
         // INotifyDataErrorInfo
         public bool HasErrors => _propertyErrors.Any();

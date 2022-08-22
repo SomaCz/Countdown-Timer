@@ -8,13 +8,11 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
-        Title="NewCountDownWindow" Height="600" Width="600"
+        Title="Nova Contagem" Height="600" Width="600"
         FontSize="18" FontFamily="Segoe UI Light" Background="#f4f4f4">
-    
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="5" />
@@ -27,15 +25,13 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
-        
         <!--Row 1-->
-        <StackPanel  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+        <StackPanel  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBlock Style="{StaticResource TbHeader}" HorizontalAlignment="Center"
-                       Text="Adicionar Novo Contador"/>
+                       Text="Adicionar Nova Contagem"/>
         </StackPanel>
         <!--Row 2-->
         <!--Form-->
-        <!--(Temp)Implement hint for all fields-->
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical"
                     Grid.ColumnSpan="3" HorizontalAlignment="Center"
                     Margin="5,25">
@@ -117,7 +113,7 @@
         </StackPanel>
         <!--Row 3-->
         <!--Add Button-->
-        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
             <Button Style="{StaticResource BtnMain}" Content="Adicionar"
                     x:Name="AddCountdown" Click="AddCountdown_Click"/>
         </StackPanel>

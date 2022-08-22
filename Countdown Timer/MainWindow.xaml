@@ -6,14 +6,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Countdown_Timer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Contagem Regressiva" Height="650" Width="800"
         WindowStartupLocation="CenterScreen"
+        SizeToContent="Width"
         FontSize="18" FontFamily="Segoe UI Light" Background="#f4f4f4">
-    
+    <Window.Resources>
+        <!--ListTemplate-->
+        <DataTemplate x:Key="CountdownList">
+            <Border Padding="5" BorderThickness="1" BorderBrush="DarkGray"
+                    CornerRadius="5" Margin="0" Background="#FFEFEFEF">
+                <Grid Grid.IsSharedSizeScope="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Countdown"/>
+                        <ColumnDefinition SharedSizeGroup="Countdown"/>
+                        <ColumnDefinition SharedSizeGroup="Countdown"/>
+                        <ColumnDefinition SharedSizeGroup="Countdown"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Title-->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Grid.ColumnSpan="4" HorizontalAlignment="Center"
+                               FontSize="28" Foreground="#4d80b3"
+                               Text="{Binding CountdownName}"/>
+                    <!--Days-->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Style="{StaticResource LbTbCountown}"
+                               Text="{Binding CountdownSpan, StringFormat=dd}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Dias"/>
+                    <!--Hours-->
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               Style="{StaticResource LbTbCountown}"
+                               Text="{Binding CountdownSpan, StringFormat=hh}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Horas"/>
+                    <!--Minutes-->
+                    <TextBlock Grid.Row="1" Grid.Column="2"
+                               Text="{Binding CountdownSpan, StringFormat=mm}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="Minutos"/>
+                    <!--Seconds-->
+                    <TextBlock Grid.Row="1" Grid.Column="3"
+                               Text="{Binding CountdownSpan, StringFormat=ss}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="Segundos"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
@@ -27,51 +70,27 @@
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
         <!--Row 1-->
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" >
-            <TextBlock Style="{StaticResource TbHeader}" Text="Contadores"
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
+            <TextBlock Style="{StaticResource TbHeader}" Text="Contagens"
                        HorizontalAlignment="Center"/>
         </StackPanel>
         <!--Row 2-->
+        <!--Buttons-->
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
             <Button Style="{StaticResource BtnMain}" Content="Nova Contagem"
                     x:Name="BtnNewCount" Click="BtnNewCount_Click"/>
+            <Button Style="{StaticResource BtnMain}" Content="Remover Contagem"
+                    x:Name="BtnRemoveCount" Click="BtnRemoveCount_Click"/>
         </StackPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical"
-                    HorizontalAlignment="Center" Grid.ColumnSpan="2">
-            
-            <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center" Grid.ColumnSpan="2">
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="Atualmente"/>
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="{Binding CurrentlyDate, StringFormat=g}"/>
-            </StackPanel>
-
-            <!--Temp-->
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="{Binding NewCountdown.CountdownName}"/>
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="{Binding NewCountdown.CountdownDateTime, StringFormat=g}"/>
-            </StackPanel>
-            <!--Countdown-->
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="Tempo Restante"/>
-                <TextBlock Style="{StaticResource TbCurrentlyTime}"
-                       Text="{Binding NewCountdown.CountdownSpan, 
-                    StringFormat=d\\:hh\\:mm\\:ss}">
-                </TextBlock>
-            </StackPanel>
-            <!--Temp-->
-        </StackPanel>
-
+        <!--Countdown List-->
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
-            <ListBox Style="{StaticResource LbCountdown}">
-
+            <ListBox  x:Name="LbCountdowns"
+                     Style="{StaticResource LbCountdown}"
+                     ItemsSource="{Binding CountdownCollection.Countdowns}"
+                     ItemTemplate="{StaticResource CountdownList}"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto">
             </ListBox>
         </StackPanel>
-        <!--Row 3-->
     </Grid>
 </Window>
